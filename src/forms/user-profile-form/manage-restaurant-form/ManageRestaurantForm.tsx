@@ -15,7 +15,7 @@ import { useEffect } from "react";
 const formSchema = z
   .object({
     restaurantName: z.string({
-      required_error: "restaurant name is required",
+      required_error: "restuarant name is required",
     }),
     city: z.string({
       required_error: "city is required",
@@ -24,7 +24,7 @@ const formSchema = z
       required_error: "country is required",
     }),
     deliveryPrice: z.coerce.number({
-      required_error: "deliveryPrice  is required",
+      required_error: "delivery price is required",
       invalid_type_error: "must be a valid number",
     }),
     estimatedDeliveryTime: z.coerce.number({
@@ -41,14 +41,15 @@ const formSchema = z
       })
     ),
     imageUrl: z.string().optional(),
-    imageFile: z.instanceof(File, { message: "Image is required" }).optional(),
+    imageFile: z.instanceof(File, { message: "image is required" }).optional(),
   })
   .refine((data) => data.imageUrl || data.imageFile, {
-    message: "Either image URL or image image File must be provided",
+    message: "Either image URL or image File must be provided",
     path: ["imageFile"],
   });
 
 type RestaurantFormData = z.infer<typeof formSchema>;
+
 type Props = {
   restaurant?: Restaurant;
   onSave: (restaurantFormData: FormData) => void;
@@ -69,11 +70,14 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
       return;
     }
 
-    const deliveryPriceFormatted = parseInt(restaurant.deliveryPrice);
+    // price lowest domination of 100 = 100pence == 1GBP
+    const deliveryPriceFormatted = parseInt(
+      (restaurant.deliveryPrice).toFixed(2)
+    );
 
     const menuItemsFormatted = restaurant.menuItems.map((item) => ({
       ...item,
-      price: parseInt(item.price)
+      price: parseInt((item.price).toFixed(2)),
     }));
 
     const updatedRestaurant = {
@@ -89,29 +93,25 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
     const formData = new FormData();
 
     formData.append("restaurantName", formDataJson.restaurantName);
-
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
 
     formData.append(
       "deliveryPrice",
-      (formDataJson.deliveryPrice)
+      (formDataJson.deliveryPrice).toString()
     );
-
     formData.append(
       "estimatedDeliveryTime",
       formDataJson.estimatedDeliveryTime.toString()
     );
-
     formDataJson.cuisines.forEach((cuisine, index) => {
       formData.append(`cuisines[${index}]`, cuisine);
     });
-
     formDataJson.menuItems.forEach((menuItem, index) => {
       formData.append(`menuItems[${index}][name]`, menuItem.name);
       formData.append(
         `menuItems[${index}][price]`,
-        (menuItem.price)
+        (menuItem.price).toString()
       );
     });
 
@@ -126,13 +126,14 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 p-10 rounded-lg"
+        className="space-y-8 bg-gray-50 p-10 rounded-lg"
       >
         <DetailsSection />
         <Separator />
         <CuisinesSection />
         <Separator />
         <MenuSection />
+        <Separator />
         <ImageSection />
         {isLoading ? <LoadingButton /> : <Button type="submit">Submit</Button>}
       </form>
