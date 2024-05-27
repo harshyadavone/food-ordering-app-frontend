@@ -46,15 +46,16 @@ const MenuItemInput = ({ index, removeMenuItem }: Props) => {
               Price (₹) <FormMessage />
             </FormLabel>
             <FormControl>
-              <Input
-                {...field}                placeholder="8.00"
-                className="bg-white"
-              />
+              <Input {...field} placeholder="8.00" className="bg-white" />
             </FormControl>
           </FormItem>
         )}
       />
-      <Button type='button' onClick={removeMenuItem} className="bg-red-500 max-h-fit">
+      <Button
+        type="button"
+        onClick={removeMenuItem}
+        className="bg-red-500 max-h-fit"
+      >
         Remove
       </Button>
     </div>
