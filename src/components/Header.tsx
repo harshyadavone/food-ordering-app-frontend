@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import MainNav from "./MainNav";
-import { ModeToggle } from "./mode-toggle";
 
 const Header = () => {
   return (
@@ -13,7 +12,6 @@ const Header = () => {
         >
           MernEats.com
         </Link>
-        <div className="pl-28 md:hidden"><ModeToggle/></div>
         <div className="md:hidden">
           <MobileNav />
         </div>
