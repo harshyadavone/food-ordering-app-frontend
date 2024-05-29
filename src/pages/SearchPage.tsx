@@ -5,6 +5,7 @@ import SearchBar, { SearchForm } from "@/components/SearchBar";
 import SearchResultCard from "@/components/SearchResultCard";
 import SearchResultInfo from "@/components/SearchResultInfo";
 import SortOptionDropdown from "@/components/SortOptionDropdown";
+import SearchPageSkeleton from "@/skeleton/SearchPageSkeleton";
 
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -69,11 +70,11 @@ const SearchPage = () => {
   };
 
   if (isLoading) {
-    <span>Loading ...</span>;
+    return <SearchPageSkeleton />;
   }
 
   if (!results?.data || !city) {
-    return <span>No results found</span>;
+    return <SearchPageSkeleton />;
   }
 
   return (

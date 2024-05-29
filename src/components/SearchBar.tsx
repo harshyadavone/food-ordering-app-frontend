@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useEffect } from "react";
@@ -48,12 +48,12 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`flex items-center gap-3 justify-between flex-row border-2 rounded-full p-3 ${
+        className={`gap-1 flex items-center lg:gap-3 justify-between flex-row border border-gray-400 dark:border-gray-900 rounded-xl p-1 md:p-2 ${
           form.formState.errors.searchQuery && "border-red-500"
         }`}
       >
         <Search
-          strokeWidth={2.5}
+          strokeWidth={1}
           size={30}
           className="ml-1 text-orange-500 hidden md:block"
         />
@@ -65,7 +65,7 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }: Props) => {
               <FormControl>
                 <Input
                   {...field}
-                  className="border-none shadow-none text-xl focus-visible:ring-0"
+                  className="border-none shadow-none text-lg  focus-visible:ring-0"
                   placeholder={placeHolder}
                 />
               </FormControl>
@@ -77,11 +77,19 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }: Props) => {
           onClick={handleReset}
           type="button"
           variant="outline"
-          className="rounded-full"
+          className="rounded-xl hidden md:block "
         >
           Reset
         </Button>
-        <Button type="submit" className="rounded-full bg-orange-500">
+        <Button
+          onClick={handleReset}
+          type="button"
+          variant="link"
+          className=" block md:hidden"
+        >
+          <X />
+        </Button>
+        <Button type="submit" className="rounded-xl text-white bg-orange-500 hover:bg-orange-600">
           Search
         </Button>
       </form>

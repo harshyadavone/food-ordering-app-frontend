@@ -16,12 +16,14 @@ const MobileNav = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu className="text-orange-500" />
+        <div className="p-1 pl-2 pr-2">
+        <Menu className="text-orange-500" size={30}/>
+        </div>
       </SheetTrigger>
       <SheetContent className="space-y-3">
         <SheetTitle>
           {isAuthenticated ? (
-            <span className="flex items-center font-bold gap-2">
+            <span className="flex items-center font-bold gap-2 text-orange-500 bg-neutral-900 p-2 rounded-lg">
               <CircleUserRound className="text-orange-500" />
               {user?.email}
             </span>

@@ -11,6 +11,7 @@ import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import { Restaurant } from "@/types";
 import { useEffect } from "react";
+import ManageRestaurantFormSkeleton from "@/skeleton/ManageRestaurantFormSkeleton";
 
 const formSchema = z
   .object({
@@ -66,7 +67,8 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
   });
 
   useEffect(() => {
-    if (!restaurant) {
+    
+    if(!restaurant){
       return;
     }
 
@@ -122,11 +124,17 @@ const ManageRestaurantForm = ({ onSave, isLoading, restaurant }: Props) => {
     onSave(formData);
   };
 
+  if (isLoading) {
+    return (
+      <ManageRestaurantFormSkeleton />
+    );
+  }
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-gray-50 p-10 rounded-lg"
+        className="space-y-8 bg-gray-50 p-10 rounded-lg dark:bg-gray-950"
       >
         <DetailsSection />
         <Separator />
