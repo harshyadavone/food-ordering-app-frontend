@@ -7,6 +7,7 @@ import RestaurantInfo from "@/components/RestaurantInfo";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardFooter } from "@/components/ui/card";
 import { UserformData } from "@/forms/user-profile-form/UserProfileForm";
+import DetailPageSkeleton from "@/skeleton/DetailPageSkeleton";
 import { MenuItem as MenuItemType } from "@/types";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -55,11 +56,6 @@ const DetailPage = () => {
         ];
       }
 
-      // sessionStorage.setItem(
-      //   `cartItems-${restaurantId}`,
-      //   JSON.stringify(updatedCartItems)
-      // );
-
       sessionStorage.setItem(
         `cartItems-${restaurantId}`,
         JSON.stringify(updatedCartItems)
@@ -98,7 +94,7 @@ const DetailPage = () => {
         name: userFormData.name,
         addressLine1: userFormData.addressLine1,
         city: userFormData.city,
-        coountry: userFormData.country,
+        country: userFormData.country,
         email: userFormData.email as string,
       },
     };
@@ -108,7 +104,7 @@ const DetailPage = () => {
   };
 
   if (isLoading || !restaurant) {
-    return "Loading...";
+    return <DetailPageSkeleton />;
   }
 
   return (
@@ -119,18 +115,21 @@ const DetailPage = () => {
           className="rounded-md object-cover h-full w-full"
         />
       </AspectRatio>
-      <div className="grid md:grid-cols-[4fr_2fr] gap-5 md:px-32">
+      <div className="flex flex-col gap-5 md:grid md:grid-cols-[2fr_1fr]">
         <div className="flex flex-col gap-4">
           <RestaurantInfo restaurant={restaurant} />
           <span className="text-2xl font-bold tracking-tight">Menu</span>
-          {restaurant.menuItems.map((menuItem) => (
-            <MenuItem
-              menuItem={menuItem}
-              addToCart={() => addToCart(menuItem)}
-            />
-          ))}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {restaurant.menuItems.map((menuItem) => (
+              <MenuItem
+                key={menuItem._id}
+                menuItem={menuItem}
+                addToCart={() => addToCart(menuItem)}
+              />
+            ))}
+          </div>
         </div>
-        <div className="">
+        <div>
           <Card>
             <OrderSummary
               restaurant={restaurant}
