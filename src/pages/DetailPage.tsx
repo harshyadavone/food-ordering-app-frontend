@@ -2,6 +2,7 @@ import { useCreateCheckoutSession } from "@/api/OrderApi";
 import { useGetRestaurant } from "@/api/RestaurantApi";
 import CheckoutButton from "@/components/CheckoutButton";
 import MenuItem from "@/components/MenuItem";
+import NoResultFound from "@/components/NoResultFound";
 import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfo from "@/components/RestaurantInfo";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -108,8 +109,12 @@ const DetailPage = () => {
     window.location.href = data.url;
   };
 
-  if (isLoading || !restaurant) {
+  if (isLoading) {
     return <DetailPageSkeleton />;
+  }
+
+  if (!restaurant) {
+    return <NoResultFound heading="No restaurant found" description="Search Something else"/>;
   }
 
   return (

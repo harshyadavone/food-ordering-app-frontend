@@ -28,7 +28,7 @@ const HomePage = () => {
       if (response.ok) {
         setBackendStatus("Backend is up and running!");
       } else {
-        setBackendStatus("Backend is not reachable.");
+        setBackendStatus("Backend is not reachable. Please wait...");
       }
     } catch (error) {
       setBackendStatus("Backend is not reachable.");

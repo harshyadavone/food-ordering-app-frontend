@@ -1,5 +1,6 @@
 import { useSearchRestaurants } from "@/api/RestaurantApi";
 import CuisineFilter from "@/components/CuisineFilter";
+import NoResultFound from "@/components/NoResultFound";
 import PaginationSelector from "@/components/PaginationSelector";
 import SearchBar, { SearchForm } from "@/components/SearchBar";
 import SearchResultCard from "@/components/SearchResultCard";
@@ -74,7 +75,7 @@ const SearchPage = () => {
   }
 
   if (!results?.data || !city) {
-    return <SearchPageSkeleton />;
+    return <NoResultFound heading="Oops! No search result found" description="Try searching something esle (eg. : Jaipur, London )"/>;
   }
 
   return (

@@ -1,4 +1,5 @@
 import { useGetMyOrders } from "@/api/OrderApi";
+import NoResultFound from "@/components/NoResultFound";
 import OrderStatusDetail from "@/components/OrderStatusDetail";
 import OrderStatusHeader from "@/components/OrderStatusHeader";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -12,7 +13,9 @@ const OrderStatusPage = () => {
   }
 
   if (!orders || orders.length === 0) {
-    return <OrderStatusSkeleton />;
+    return (
+      <NoResultFound heading="There are no orders" description="Try to order somthing..." />
+    )
   }
 
   return (
