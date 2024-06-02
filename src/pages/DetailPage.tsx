@@ -56,6 +56,11 @@ const DetailPage = () => {
         ];
       }
 
+      // sessionStorage.setItem(
+      //   `cartItems-${restaurantId}`,
+      //   JSON.stringify(updatedCartItems)
+      // );
+
       sessionStorage.setItem(
         `cartItems-${restaurantId}`,
         JSON.stringify(updatedCartItems)
@@ -94,7 +99,7 @@ const DetailPage = () => {
         name: userFormData.name,
         addressLine1: userFormData.addressLine1,
         city: userFormData.city,
-        country: userFormData.country,
+        coountry: userFormData.country,
         email: userFormData.email as string,
       },
     };
@@ -115,21 +120,19 @@ const DetailPage = () => {
           className="rounded-md object-cover h-full w-full"
         />
       </AspectRatio>
-      <div className="flex flex-col gap-5 md:grid md:grid-cols-[2fr_1fr]">
+      <div className="grid md:grid-cols-[4fr_2fr] gap-5 md:px-32">
         <div className="flex flex-col gap-4">
           <RestaurantInfo restaurant={restaurant} />
           <span className="text-2xl font-bold tracking-tight">Menu</span>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {restaurant.menuItems.map((menuItem) => (
-              <MenuItem
-                key={menuItem._id}
-                menuItem={menuItem}
-                addToCart={() => addToCart(menuItem)}
-              />
-            ))}
-          </div>
+          {restaurant.menuItems.map((menuItem) => (
+            <MenuItem
+              key={menuItem._id}
+              menuItem={menuItem}
+              addToCart={() => addToCart(menuItem)}
+            />
+          ))}
         </div>
-        <div>
+        <div className="">
           <Card>
             <OrderSummary
               restaurant={restaurant}
